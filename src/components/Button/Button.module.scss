@@ -1,0 +1,21 @@
+@import '../../styles/main.scss';
+
+.button {
+  border: none;
+  border-radius: 4px;
+  padding: 9px 17px 11px;
+  cursor: pointer;
+  @include text(rem(14px), 500);
+  line-height: 87.5%;
+  letter-spacing: 0.15px;
+}
+
+.default {
+  background-color: $GREEN;
+  color: $WHITE;
+}
+
+.primary {
+  background-color: $ASIDE_BG;
+  color: $BTN_GRAY;
+}

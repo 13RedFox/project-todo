@@ -1,0 +1,13 @@
+@import '../../styles/main.scss';
+
+.content {
+  width: 100%;
+  padding: 57px 69px 57px 57px;
+}
+
+.title {
+  @include text(rem(32px), 600, $N2);
+  line-height: 82%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $BORDER;
+}

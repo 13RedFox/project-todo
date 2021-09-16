@@ -1,0 +1,71 @@
+@import '../../styles/main.scss';
+
+.aside {
+  width: 100%;
+  max-width: 200px;
+  min-height: 100vh;
+  background-color: $ASIDE_BG;
+  border-right: 1px solid $BORDER;
+  padding: 57px 20px 0;
+  &__top {
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    margin-bottom: 28px;
+    svg {
+      @include size(18px);
+      fill: $GRAY;
+      margin-right: 6px;
+    }
+  }
+  &__topText {
+    @include text(rem(14px) 400, $BLACK);
+    letter-spacing: 85%;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 27px;
+    &_item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 10px 5px 11px 12px;
+      cursor: pointer;
+    }
+    &_marker {
+      @include size(10px, true);
+      background-color: $GREEN;
+      margin-right: 10px;
+    }
+    &_text {
+      @include text(rem(14px), 400, $BLACK);
+      line-height: 87.5%;
+      letter-spacing: 0.15px;
+    }
+  }
+
+  .active {
+    background-color: $WHITE;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+}
+
+.newFolders {
+  display: flex;
+  align-items: center;
+  padding: 10px 0px 10px 10px;
+  cursor: pointer;
+  svg {
+    @include size(10px);
+    margin-right: 10px;
+    fill: $DARK_GREY;
+  }
+  &__text {
+    @include text(rem(14px), 500, $DARK_GREY);
+    line-height: 87.5%;
+    letter-spacing: 0.15px;
+  }
+}
