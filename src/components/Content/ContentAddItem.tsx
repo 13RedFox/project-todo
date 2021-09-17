@@ -8,17 +8,32 @@ interface ContentAddItemProps {
   onCloseModal?: () => void;
 }
 
+const handleSubmit = (event: React.SyntheticEvent) => {
+  event.preventDefault();
+};
+
+const inputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(e.target.value);
+  let value = e.target.value;
+  return value;
+};
+
 const addNewItem = () => {
-  console.log('Add New item');
+  console.log(inputValue);
 };
 
 const ContentAddItem: FC<ContentAddItemProps> = ({ onCloseModal }) => {
   return (
-    <form className={styles.addNewTask}>
-      <input className={styles.input} type="text" placeholder="Текст задачи" />
+    <form className={styles.addNewTask} onSubmit={handleSubmit}>
+      <input
+        className={styles.input}
+        type="text"
+        placeholder="Текст задачи"
+        onChange={inputValue}
+      />
       <div className={styles.wrapperBtn}>
         <Button name="Добавить задачу" className={styles.addBtn} onClickButton={addNewItem} />
-        <Button name="Отмена" bg="primary" onClickButton={onCloseModal} />
+        <Button type="button" name="Отмена" bg="primary" onClickButton={onCloseModal} />
       </div>
     </form>
   );

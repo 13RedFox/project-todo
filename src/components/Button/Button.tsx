@@ -7,12 +7,13 @@ interface ButtonProps {
   className?: string;
   name: string;
   bg?: string;
+  type?: 'submit' | 'reset' | 'button';
   onClickButton?: () => void;
 }
 
-const Button: FC<ButtonProps> = ({ name, bg = 'default', onClickButton }) => {
+const Button: FC<ButtonProps> = ({ name, bg = 'default', type = 'submit', onClickButton }) => {
   return (
-    <button type="button" className={classNames(styles.button, styles[bg])} onClick={onClickButton}>
+    <button type={type} className={classNames(styles.button, styles[bg])} onClick={onClickButton}>
       {name}
     </button>
   );
