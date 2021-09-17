@@ -2,6 +2,7 @@
 
 .content {
   width: 100%;
+  min-height: 100vh;
   padding: 57px 69px 57px 57px;
 }
 
@@ -9,5 +10,122 @@
   @include text(rem(32px), 600, $N2);
   line-height: 82%;
   padding-bottom: 20px;
+  margin-bottom: 31px;
   border-bottom: 1px solid $BORDER;
+  @include transition(opacity);
+  svg {
+    fill: $BTN_GRAY;
+    @include size(15px);
+    opacity: 0;
+    @include transition(opacity);
+    cursor: pointer;
+  }
+  &:hover svg {
+    opacity: 1;
+  }
+}
+
+.todoList {
+  margin-bottom: 20px;
+}
+
+// # TODO_ITEM
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  @include transition(background-color, border-color);
+  &:hover > .marker {
+    background-color: $LIGHT_GRAY;
+    border-color: transparent;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include size(20px, true);
+  border: 2px solid $LIGHT_GRAY;
+  margin-right: 15px;
+  @include transition(background-color, border-color);
+  svg {
+    @include size(13px);
+    path {
+      stroke: white;
+    }
+  }
+}
+
+.done {
+  border-color: transparent;
+  background-color: $GREEN;
+}
+
+.text {
+  @include text(rem(16px), 500, $BLACK);
+  line-height: 84%;
+}
+
+.wrapperAddNewItem {
+  position: relative;
+}
+
+.addTodoItem {
+  display: flex;
+  align-items: center;
+  @include text(rem(16px), 500, $LIGHT_GRAY);
+  line-height: 84%;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+  @include transition(color);
+  &:hover {
+    color: $GREEN;
+  }
+  svg {
+    @include size(14px);
+    margin-right: 19px;
+    path {
+      stroke: $LIGHT_GRAY;
+    }
+  }
+}
+
+// # addNewTask
+
+.addNewTask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  @include text(rem(14px), 500, $LIGHT_GRAY);
+  line-height: 82%;
+  letter-spacing: 0.15px;
+  border: 1px solid $ASIDE_BG;
+  border-radius: 4px !important;
+  outline-color: $GREEN;
+  padding: 9.31px 14px 8.5px;
+  margin-bottom: 16px;
+  &::placeholder {
+    color: $LIGHT_GRAY;
+  }
+}
+
+.empty {
+  position: relative;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  @include text(rem(32px), 700, $N0);
+  line-height: 82%;
 }

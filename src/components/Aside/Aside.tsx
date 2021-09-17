@@ -1,26 +1,28 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { FC, useState } from 'react';
 import IconSvg from '../../assets/icons';
-import AddFolders from '../AddFolders';
+import { NewFolders } from '../App/App';
 
 import styles from './Aside.module.scss';
+import AsideNewFolder from './components/AsideNewFolder';
 
-interface Props {}
-
-interface NewFolders {
-  name: string;
-  id: number;
+interface AsideProps {
+  className?: string;
+  newFolders: NewFolders[];
 }
 
-const newFolders: NewFolders[] = [
-  { name: 'Покупки', id: 1 },
-  { name: 'Фронтенд', id: 2 },
-  { name: 'Фильмы и сер...', id: 3 },
-  { name: 'Книги', id: 4 },
-  { name: 'Личное', id: 5 },
-];
+const Aside: FC<AsideProps> = ({ newFolders }) => {
+  const [showNewFolder, setShowNewFolder] = useState(false);
 
-const Aside = (props: Props) => {
+  const addNewFolder = () => {
+    setShowNewFolder(true);
+    console.log('Add New Folder');
+  };
+
+  const closeModal = () => {
+    setShowNewFolder(false);
+  };
+
   return (
     <aside className={styles.aside}>
       <div className={styles.aside__top}>
@@ -29,20 +31,20 @@ const Aside = (props: Props) => {
       </div>
 
       <ul className={styles.aside__list}>
-        {(newFolders || []).map((item, idx) => (
-          <li className={classNames(styles.aside__list_item, styles.active)} key={item.id}>
-            <div className={styles.aside__list_marker} />
+        {(newFolders || []).map((item) => (
+          <li className={classNames(styles.aside__list_item)} key={item.id}>
+            <div className={styles.aside__list_marker} style={{ backgroundColor: item.color }} />
             <span className={styles.aside__list_text}>{item.name}</span>
           </li>
         ))}
       </ul>
 
-      <div className={styles.newFolders}>
+      <button className={styles.newFolders} onClick={addNewFolder}>
         <IconSvg id="plus" />
         <span className={styles.newFolders__text}>Добавить папку</span>
-      </div>
+      </button>
 
-      <AddFolders />
+      {showNewFolder && <AsideNewFolder closeModal={closeModal} />}
     </aside>
   );
 };
