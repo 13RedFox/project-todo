@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import IconSvg from '../../../../assets/icons';
 import Button from '../../../Button';
 import styles from './AsideNewFolder.module.scss';
@@ -9,39 +9,50 @@ interface AsideNewFolderProps {
 
 interface ColorsRadio {
   color: string;
-  id: number;
+  id: string;
   isChecked: Boolean;
 }
 
 const colorsRadio: ColorsRadio[] = [
-  { color: '#c9d1d3', id: 0, isChecked: true },
-  { color: '#42b883', id: 1, isChecked: false },
-  { color: '#64c4ed', id: 2, isChecked: false },
-  { color: '#ffbbcc', id: 3, isChecked: false },
-  { color: '#b6e6bd', id: 4, isChecked: false },
-  { color: '#c355f5', id: 5, isChecked: false },
-  { color: '#09011a', id: 6, isChecked: false },
-  { color: '#ff6464', id: 7, isChecked: false },
+  { color: '#c9d1d3', id: '0', isChecked: false },
+  { color: '#42b883', id: '1', isChecked: false },
+  { color: '#64c4ed', id: '2', isChecked: false },
+  { color: '#ffbbcc', id: '3', isChecked: true },
+  { color: '#b6e6bd', id: '4', isChecked: false },
+  { color: '#c355f5', id: '5', isChecked: false },
+  { color: '#09011a', id: '6', isChecked: false },
+  { color: '#ff6464', id: '7', isChecked: false },
 ];
 
 const AsideNewFolder: FC<AsideNewFolderProps> = ({ closeModal }) => {
-  const value = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+  const [isSelected, setIsSelected] = useState('#c9d1d3');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
+
   return (
-    <form className={styles.popup}>
+    <form className={styles.popup} onSubmit={handleSubmit}>
       <button className={styles.close} onClick={closeModal}>
         <IconSvg id="plus" />
       </button>
-      <input className={styles.input} type="text" placeholder="Название папки" onChange={value} />
+      <input className={styles.input} type="text" placeholder="Название папки" />
       <div className={styles.wrapperRadio}>
         {(colorsRadio || []).map((color) => (
           <div key={color.id} className={styles.wrapperColor}>
-            <input className={styles.inputRadio} type="radio" name="radio" value={color.color} />
+            <input
+              className={styles.inputRadio}
+              type="radio"
+              name="radio"
+              id={color.id}
+              checked={isSelected === color.color}
+              value={color.color}
+              onChange={(e) => setIsSelected((prevState) => e.target.value)}
+            />
             <label
               className={styles.labelRadio}
               style={{ backgroundColor: color.color }}
-              htmlFor="radio"
+              htmlFor={color.id}
             />
           </div>
         ))}

@@ -8,10 +8,10 @@ import AsideNewFolder from './components/AsideNewFolder';
 
 interface AsideProps {
   className?: string;
-  newFolders: NewFolders[];
+  db: NewFolders[];
 }
 
-const Aside: FC<AsideProps> = ({ newFolders }) => {
+const Aside: FC<AsideProps> = ({ db }) => {
   const [showNewFolder, setShowNewFolder] = useState(false);
 
   const addNewFolder = () => {
@@ -25,13 +25,15 @@ const Aside: FC<AsideProps> = ({ newFolders }) => {
 
   return (
     <aside className={styles.aside}>
-      <div className={styles.aside__top}>
-        <IconSvg id="entypo-list" />
-        <span className={styles.aside__topText}>Все задачи</span>
-      </div>
+      {db.length > 0 && (
+        <div className={styles.aside__top}>
+          <IconSvg id="entypo-list" />
+          <span className={styles.aside__topText}>Все задачи</span>
+        </div>
+      )}
 
       <ul className={styles.aside__list}>
-        {(newFolders || []).map((item) => (
+        {(db || []).map((item) => (
           <li className={classNames(styles.aside__list_item)} key={item.id}>
             <div className={styles.aside__list_marker} style={{ backgroundColor: item.color }} />
             <span className={styles.aside__list_text}>{item.name}</span>

@@ -23,10 +23,15 @@
   @include size(21px, true);
   background-color: $DARK_GREY;
   cursor: pointer;
+  @include transition(stroke);
+  &:hover svg {
+    path {
+      stroke: $GREEN;
+    }
+  }
   svg {
     @include size(11px);
     transform: rotate(45deg);
-
     path {
       stroke: $WHITE;
     }
