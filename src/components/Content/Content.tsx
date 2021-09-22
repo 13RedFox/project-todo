@@ -1,24 +1,21 @@
 import React, { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 import IconSvg from '../../assets/icons';
-import { Todo } from '../App/App';
-
-import styles from './Content.module.scss';
 import ContentAddItem from './ContentAddItem';
 import ContentItem from './ContentItem';
 
+import styles from './Content.module.scss';
+
 interface ContentProps {
   className?: string;
-  title: string;
-  todos: Todo[];
 }
 
-const Content: FC<ContentProps> = ({ title, todos }) => {
+const Content: FC<ContentProps> = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const onItemClick = (item: Todo) => {
-    item.isDone = !item.isDone;
-    console.log(item);
-  };
+  const state = useSelector(
+    (state: any) => state.folders.filter((item: any) => item.isActive === true)[0],
+  );
 
   const isShowModal = () => {
     setShowModal((prevState) => !prevState);
@@ -32,25 +29,29 @@ const Content: FC<ContentProps> = ({ title, todos }) => {
 
   return (
     <div className={styles.content}>
-      <h1 className={styles.title}>
-        {title} <IconSvg id="edit" />
-      </h1>
+      {state ? (
+        <>
+          <h1 className={styles.title} style={{ color: state.color }}>
+            {state.name} <IconSvg id="edit" />
+          </h1>
 
-      <ul className={styles.todoList}>
-        {(todos || []).map((item) => (
-          <ContentItem onTodoClick={() => onItemClick(item)} item={item} key={item.id} />
-        ))}
-      </ul>
+          <ul className={styles.todoList}>
+            {(state.todos || []).map((item: { todos: any; id: React.Key | null | undefined }) => (
+              <ContentItem item={item} key={item.id} />
+            ))}
+          </ul>
 
-      <div className={styles.wrapperAddNewItem}>
-        <button className={styles.addTodoItem} onClick={isShowModal}>
-          <IconSvg id="plus" />
-          <span>Новая задача</span>
-        </button>
-        {showModal && <ContentAddItem onCloseModal={inCloseModal} />}
-      </div>
-
-      {/* <span className={styles.empty}>Задачи отсутствуют</span> */}
+          <div className={styles.wrapperAddNewItem}>
+            <button className={styles.addTodoItem} onClick={isShowModal}>
+              <IconSvg id="plus" />
+              <span>Новая задача</span>
+            </button>
+            {showModal && <ContentAddItem onCloseModal={inCloseModal} />}
+          </div>
+        </>
+      ) : (
+        <span className={styles.empty}>Задачи отсутствуют</span>
+      )}
     </div>
   );
 };

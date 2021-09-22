@@ -3,6 +3,9 @@ import IconSvg from '../../../../assets/icons';
 import Button from '../../../Button';
 import styles from './AsideNewFolder.module.scss';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { addFolderAction } from '../../../../store/actions/actions';
+
 interface AsideNewFolderProps {
   closeModal?: () => void;
 }
@@ -26,9 +29,25 @@ const colorsRadio: ColorsRadio[] = [
 
 const AsideNewFolder: FC<AsideNewFolderProps> = ({ closeModal }) => {
   const [isSelected, setIsSelected] = useState('#c9d1d3');
+  const [folderName, setFolderName] = useState<string>('');
+
+  const store = useSelector((state: any) => state);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const newFolder = {
+      name: folderName,
+      id: store.folders.length + 1,
+      isActive: false,
+      color: isSelected,
+      todos: [
+        // { name: 'Изучить JavaScript1', id: 1, isDone: false },
+        // { name: 'Изучить JavaScript2', id: 2, isDone: false },
+      ],
+    };
+    dispatch(addFolderAction(newFolder));
   };
 
   return (
@@ -36,7 +55,15 @@ const AsideNewFolder: FC<AsideNewFolderProps> = ({ closeModal }) => {
       <button className={styles.close} onClick={closeModal}>
         <IconSvg id="plus" />
       </button>
-      <input className={styles.input} type="text" placeholder="Название папки" />
+
+      <input
+        className={styles.input}
+        type="text"
+        placeholder="Название папки"
+        value={folderName}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFolderName(e.target.value)}
+      />
+
       <div className={styles.wrapperRadio}>
         {(colorsRadio || []).map((color) => (
           <div key={color.id} className={styles.wrapperColor}>
@@ -57,6 +84,7 @@ const AsideNewFolder: FC<AsideNewFolderProps> = ({ closeModal }) => {
           </div>
         ))}
       </div>
+
       <Button name="Добавить" />
     </form>
   );

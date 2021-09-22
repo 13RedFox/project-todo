@@ -8,28 +8,39 @@ interface ContentAddItemProps {
   onCloseModal?: () => void;
 }
 
-const handleSubmit = (event: React.SyntheticEvent) => {
-  event.preventDefault();
-};
-
-const inputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  console.log(e.target.value);
-  let value = e.target.value;
-  return value;
-};
-
-const addNewItem = () => {
-  console.log(inputValue);
-};
-
 const ContentAddItem: FC<ContentAddItemProps> = ({ onCloseModal }) => {
+  // const [state, setState] = useState('');
+
+  const handleSubmit = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+
+    // const newObj = {
+    //   name: state,
+    // };
+
+    // despatch({ type: 'ADD_FOLDER', payload: newObj });
+    // despatch(addFoldeerAction(newObj));
+  };
+
+  const inputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    let value = e.target.value;
+    return value;
+  };
+
+  const addNewItem = () => {
+    console.log(inputValue);
+  };
+
   return (
     <form className={styles.addNewTask} onSubmit={handleSubmit}>
       <input
         className={styles.input}
         type="text"
         placeholder="Текст задачи"
-        onChange={inputValue}
+        name="name"
+        // value={state}
+        // onChange={setState}
       />
       <div className={styles.wrapperBtn}>
         <Button name="Добавить задачу" className={styles.addBtn} onClickButton={addNewItem} />
